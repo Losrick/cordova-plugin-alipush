@@ -2,7 +2,7 @@
 
 `APP_KEY和APP_SECRET必须存在`
 
-cordova plugin add https://github.com/youyfeng/cordova-plugin-alipush.git --variable APP_KEY=APP_KEY --variable APP_SECRET=APP_SECRET --variable MIID=MIID --variable MIKEY=MIKEY --variable VIVOID=VIVOID --variable VIVOKEY=VIVOKEY --variable OPPOKEY=OPPOKEY --variable OPPOSECRET=OPPOSECRET --variable MEIZUID=MEIZUID --variable MEIZUKEY=MEIZUKEY --variable HUAWEIID=HUAWEIID --variable CHANNEL=1
+cordova plugin add https://github.com/Losrick/cordova-plugin-alipush.git --variable APP_KEY=APP_KEY --variable APP_SECRET=APP_SECRET --variable MIID=MIID --variable MIKEY=MIKEY --variable VIVOID=VIVOID --variable VIVOKEY=VIVOKEY --variable OPPOKEY=OPPOKEY --variable OPPOSECRET=OPPOSECRET --variable MEIZUID=MEIZUID --variable MEIZUKEY=MEIZUKEY --variable HUAWEIID=HUAWEIID --variable CHANNEL=1
 
 **辅助弹窗**
 
