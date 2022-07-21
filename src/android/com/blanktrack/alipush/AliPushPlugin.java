@@ -33,7 +33,7 @@ import java.util.List;
 
 public class AliPushPlugin extends CordovaPlugin {
     public static final String TAG = "AliPushPlugin";
-    public static String CHANNEL = "";
+    public static String CHANNEL = "1";
     private static CallbackContext pushContext;
 
     public static CallbackContext getCurrentCallbackContext() {
@@ -63,8 +63,6 @@ public class AliPushPlugin extends CordovaPlugin {
      * 旨在对通知进行分类管理。如果用户App的targetSdkVersion大于等于26，且并未设置NotificaitonChannel，那么创建的通知是不会弹出显示。
      */
     private static void createNotificationChannel(Context applicationContext) {
-        ApplicationInfo appInfo = Context.getPackageManager().getApplicationInfo(Context.getPackageName(), 128);
-        AliPushPlugin.CHANNEL = appInfo.metaData.getString("CHANNEL");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager mNotificationManager = (NotificationManager) applicationContext.getSystemService(
                     Context.NOTIFICATION_SERVICE);
