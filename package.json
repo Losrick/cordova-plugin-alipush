@@ -1,0 +1,8 @@
+{
+  "name": "cordova-plugin-alipush",
+  "version": "1.0.0",
+  "description": "this is ali push cordova plugin",
+  "main": "AliPushPlugin.js",
+  "author": "",
+  "license": "Apache-2.0"
+}

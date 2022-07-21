@@ -1,0 +1,93 @@
+
+// Allow plugins to declare Maven dependencies via build-extras.gradle.
+buildscript {
+    repositories {
+        maven {
+            // url "https://maven.google.com"
+            //url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
+        maven{ url 'https://maven.aliyun.com/repository/google'}
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
+                // 配置HMS Core SDK的Maven仓地址。
+        maven {
+            url 'https://developer.huawei.com/repo/'
+        }
+        mavenCentral()
+    }
+    dependencies {
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+        classpath 'com.android.tools.build:gradle:4.2.2'
+        // 添加emas-services插件
+        classpath 'com.aliyun.ams:emas-services:1.0.1'
+    }
+}
+allprojects {
+    repositories {
+        mavenCentral();
+        jcenter();
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
+        maven{ url 'https://maven.aliyun.com/repository/google'}
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
+        // 配置HMS Core SDK的Maven仓地址。
+        maven {
+            url 'https://developer.huawei.com/repo/'
+        }
+    }
+    //This replaces project.properties w.r.t. build settings
+    project.ext {
+      defaultBuildToolsVersion="27.0.1" //String
+      defaultMinSdkVersion=19 //Integer - Minimum requirement is Android 4.4
+      defaultTargetSdkVersion=27 //Integer - We ALWAYS target the latest by default
+      defaultCompileSdkVersion=27 //Integer - We ALWAYS compile with the latest by default
+    }
+}
+android {
+    defaultConfig {
+        ndk { abiFilters 'armeabi', 'x86','arm64-v8a','armeabi-v7a','x86_64' }
+    }
+}
+repositories {
+        flatDir {
+            dirs 'libs' //this way we can find the .aar file in libs folder
+        }
+    }
+dependencies {
+    // compile 'com.aliyun.ams:alicloud-android-push:3.1.2'
+    // compile 'com.aliyun.ams:alicloud-android-third-push:3.0.5@aar'
+    // compile ('com.google.firebase:firebase-messaging:9.6.1')
+
+    implementation fileTree(dir: 'libs', include: '*.jar')
+    // 阿里集成推送依赖开始，把所有的aar都添加上
+    api(name:'alicloud-android-accs-4.6.3-emas', ext: 'aar')
+    api(name:'alicloud-android-agoo-4.6.3-emas', ext: 'aar')
+    api(name:'alicloud-android-push-3.7.7', ext: 'aar')
+    api(name:'alicloud-android-error-1.1.0', ext: 'aar')
+    api(name:'alicloud-android-logger-1.2.0', ext: 'aar')
+    api(name:'alicloud-android-rest-1.6.5-open', ext: 'aar')
+    api(name:'alicloud-android-sender-1.1.4', ext: 'aar')
+
+    api(name:'alicloud-android-third-push-3.7.7', ext: 'aar')
+    api(name:'alicloud-android-third-push-fcm-3.7.7', ext: 'aar')
+    api(name:'alicloud-android-third-push-huawei-3.7.7', ext: 'aar')
+    api(name:'alicloud-android-third-push-meizu-3.7.7', ext: 'aar')
+    api(name:'alicloud-android-third-push-oppo-3.7.7', ext: 'aar')
+    api(name:'alicloud-android-third-push-vivo-3.7.7', ext: 'aar')
+    api(name:'alicloud-android-third-push-xiaomi-3.7.7', ext: 'aar')
+
+    api(name:'opush-3.0.0', ext: 'aar')
+    //魅族离线包（官方文档中下载）
+    // api(name:'push-internal-4.1.4', ext: 'aar')
+    api(name:'tnet4android-3.1.14.10-open-fix1', ext: 'aar')
+    api(name:'vivo-push-3.0.0.4', ext: 'aar')
+    
+    // 华为从5.0.2版本开始不在提供离线包
+    api 'com.huawei.hms:push:5.3.0.304'
+    // 魅族从4.1.4版本开始不在提供离线包
+    api 'com.meizu.flyme.internet:push-internal:4.1.4'
+    // 阿里集成推送依赖结束
+}

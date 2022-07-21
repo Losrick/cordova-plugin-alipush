@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-alipush" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>PushPlugin</name>
+    <engines>
+        <engine name="cordova-ios" version=">=3.8"></engine>
+        <engine name="cordova-android" version=">=7"></engine>
+    </engines>
+    <js-module name="AliPushPlugin" src="www/AliPushPlugin.js">
+        <clobbers target="AliPushPlugin" />
+    </js-module>
+    <preference name="HUAWEIID" default="" />
+    <preference name="VIVOID" default=" " />
+    <preference name="VIVOKEY" default=" " />
+    <preference name="CHANNEL" default="1" />
+    <preference name="OPPOKEY" default="" />
+    <preference name="OPPOSECRET" default="" />
+    <preference name="MEIZUID" default="" />
+    <preference name="MEIZUKEY" default="" />
+    <preference name="MIID" default="" />
+    <preference name="MIKEY" default="" />
+    <!-- <preference name="GCMSENDID" default=" " />
+    <preference name="GCMAPPID" default=" " /> -->
+    <preference name="APP_KEY" />
+    <preference name="APP_SECRET" />
+    <dependency id="cordova-plugin-add-swift-support" />
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="AliPushPlugin">
+                <param name="ios-package" value="AliPushPlugin" />
+            </feature>
+            <preference name="AliPush_APP_KEY" value="$APP_KEY" />
+            <preference name="AliPush_APP_SECRET" value="$APP_SECRET" />
+        </config-file>
+        <header-file src="src/ios/AliPush-Bridging-Header.h" />
+        <source-file src="src/ios/AliPushPlugin.swift" />
+        <source-file src="src/ios/AppDelegate+AliPush.swift" />
+        <!-- 依赖 -->
+        <framework src="src/ios/libs/AlicloudSender.framework" custom="true" />
+        <framework src="src/ios/libs/AlicloudUtils.framework" custom="true" />
+        <framework src="src/ios/libs/CloudPushSDK.framework" custom="true" />
+        <framework src="src/ios/libs/EMASRest.framework" custom="true" />
+        <framework src="src/ios/libs/UTDID.framework" custom="true" />
+        <framework src="src/ios/libs/UTMini.framework" custom="true" />
+        <framework src="libz.tbd" framework="true" />
+        <framework src="libresolv.tbd" />
+        <framework src="CoreTelephony.framework" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="UserNotifications.framework" />
+        <framework src="libsqlite3.tbd" />
+    </platform>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="AliPushPlugin">
+                <param name="android-package" value="com.blanktrack.alipush.AliPushPlugin" />
+            </feature>
+            <preference name="OPPOKEY" value="\$OPPOKEY" />
+            <preference name="OPPOSECRET" value="\$OPPOSECRET" />
+            <preference name="MEIZUID" value="\$MEIZUID" />
+            <preference name="MEIZUKEY" value="\$MEIZUKEY" />
+            <preference name="MIID" value="\$MIID" />
+            <preference name="MIKEY" value="\$MIKEY" />
+            <!-- <preference name="GCMSENDID" value="\$GCMSENDID" />
+            <preference name="GCMAPPID" value="$GCMAPPID" /> -->
+        </config-file>
+
+        <hook type="after_plugin_add" src="scripts/androidAfterPrepare.js" />
+        <hook type="after_plugin_install" src="scripts/android_install.js" />
+        <hook type="after_prepare" src="scripts/androidAfterPrepare.js" />
+        <hook type="before_plugin_uninstall" src="scripts/androidBeforePluginUninstall.js" />
+        <hook type="before_plugin_rm" src="scripts/android_install.js" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <meta-data android:name="CHANNEL" android:value="$CHANNEL" />
+            <meta-data android:name="com.huawei.hms.client.appid" android:value="$HUAWEIID" />
+            <meta-data android:name="com.vivo.push.app_id" android:value="$VIVOID" />
+            <meta-data android:name="com.vivo.push.api_key" android:value="$VIVOKEY" />
+            <meta-data android:name="com.alibaba.app.appkey" android:value="$APP_KEY" />
+            <meta-data android:name="com.alibaba.app.appsecret" android:value="$APP_SECRET" />
+            <receiver android:name="com.blanktrack.alipush.MyMessageReceiver" android:exported="false">
+                <!-- 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 -->
+                <intent-filter>
+                    <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+                </intent-filter>
+                <intent-filter>
+                    <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+                </intent-filter>
+                <intent-filter>
+                    <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+                </intent-filter>
+            </receiver>
+            <activity android:exported="true" android:name=".alipush.AliPushActivity"></activity>
+            <!-- <receiver android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                    <category android:name="com.taobao.taobao" />
+                </intent-filter>
+            </receiver>
+            <receiver android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver" android:exported="false" />
+            <service android:name="com.alibaba.sdk.android.push.AgooFirebaseInstanceIDService" android:exported="true">
+                <intent-filter android:priority="-500">
+                    <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                </intent-filter>
+            </service>
+            <service android:name="com.alibaba.sdk.android.push.AgooFirebaseMessagingService" android:exported="true">
+                <intent-filter android:priority="-500">
+                    <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                </intent-filter>
+            </service> -->
+        </config-file>
+        <framework src="push.gradle" custom="true" type="gradleReference" />
+        <source-file src="src/android/libs/alicloud-android-accs-4.6.3-emas.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-agoo-4.6.3-emas.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-beacon-1.0.7.jar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-crashdefend-0.0.6.jar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-error-1.1.0.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-logger-1.2.0.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-push-3.7.7.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-rest-1.6.5-open.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-sender-1.1.4.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-third-push-3.7.7.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-third-push-fcm-3.7.7.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-third-push-huawei-3.7.7.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-third-push-meizu-3.7.7.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-third-push-oppo-3.7.7.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-third-push-vivo-3.7.7.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-third-push-xiaomi-3.7.7.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-tool-1.0.0.jar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-ut-5.4.4.jar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-utdid-2.6.0.jar" target-dir="libs/" />
+        <source-file src="src/android/libs/alicloud-android-utils-2.0.0.jar" target-dir="libs/" />
+        <source-file src="src/android/libs/mipush-4.9.1.jar" target-dir="libs/" />
+        <!-- <source-file src="src/android/libs/mta-sdk-1.6.2.jar" target-dir="libs/" /> -->
+        <!-- <source-file src="src/android/libs/nativekeyboard.jar" target-dir="libs/" /> -->
+        <source-file src="src/android/libs/networksdk-3.5.8.6-open.jar" target-dir="libs/" />
+        <!-- <source-file src="src/android/libs/open_sdk_r5793.jar" target-dir="libs/" /> -->
+        <source-file src="src/android/libs/opush-3.0.0.aar" target-dir="libs/" />
+        <!--手动集成魅族包-->
+        <!-- <source-file src="src/android/libs/push-internal-4.1.4.aar" target-dir="libs/" /> -->
+        <source-file src="src/android/libs/tnet4android-3.1.14.10-open-fix1.aar" target-dir="libs/" />
+        <source-file src="src/android/libs/vivo-push-3.0.0.4.aar" target-dir="libs/" />
+        <source-file src="src/android/com/blanktrack/alipush/AliPushPlugin.java" target-dir="src/com/blanktrack/alipush/" />
+        <source-file src="src/android/com/blanktrack/alipush/MyMessageReceiver.java" target-dir="src/com/blanktrack/alipush/" />
+        <source-file src="src/android/com/blanktrack/alipush/MyApplication.java" target-dir="src/com/blanktrack/alipush/" />
+        <source-file src="src/android/com/blanktrack/alipush/MyHuaWeiRegister.java" target-dir="src/com/blanktrack/alipush/" />
+    </platform>
+</plugin>
