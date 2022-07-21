@@ -147,64 +147,64 @@ cordova plugin add https://github.com/youyfeng/cordova-plugin-alipush.git --vari
 1、在 platforms/android/app 目录下添加 aliyun-emas-services.json 文件
 
 2、添加阿里云 maven 依赖
-在 platforms/android/目录下的 build.gradle 中添加仓库
-buildscript {
-repositories {
-// 阿里云集体依赖仓库
-        maven{ url'https://maven.aliyun.com/nexus/content/repositories/releases/'}
-    }
-}
-allprojects {
-    repositories {
-        maven{ url'https://maven.aliyun.com/nexus/content/repositories/releases/'}
-    }
-}
+    在 platforms/android/目录下的 build.gradle 中添加仓库
+    buildscript {
+    repositories {
+    // 阿里云集体依赖仓库
+            maven{ url'https://maven.aliyun.com/nexus/content/repositories/releases/'}
+        }
+    }
+    allprojects {
+        repositories {
+            maven{ url'https://maven.aliyun.com/nexus/content/repositories/releases/'}
+        }
+    }
 
 **使用方法**
 
-declare let AliPushPlugin: any;
+    declare let AliPushPlugin: any;
 
-ngOnInit() {
-// 初始化阿里云消息推送+获取 deviceId
-this.platform.ready().then(() => {
-this.getDeviceId();
-this.initPushService();
-});
-}
+    ngOnInit() {
+    // 初始化阿里云消息推送+获取 deviceId
+    this.platform.ready().then(() => {
+    this.getDeviceId();
+    this.initPushService();
+    });
+    }
 
-// 初始化阿里推送服务
-async initPushService() {
-try {
-const result_1 = await new Promise((resolve, reject) => {
-AliPushPlugin.init(
-(result) => {
-resolve(result);
-},
-(error) => {
-reject(error);
-}
-);
-});
-console.log("初始化阿里云推送成功：", result_1);
-} catch (error_1) {
-console.log("初始化阿里云推送失败：", error_1);
-}
-}
-// 获取设备 id;
-async getDeviceId() {
-try {
-const result_1 = await new Promise((resolve, reject) => {
-AliPushPlugin.getDeviceId(
-(result) => {
-resolve(result);
-},
-(error) => {
-reject(error);
-}
-);
-});
-console.log("getPushDeviceId 成功：", result_1);
-} catch (error_1) {
-console.log("getPushDeviceId 失败：", error_1);
-}
-}
+    // 初始化阿里推送服务
+    async initPushService() {
+    try {
+    const result_1 = await new Promise((resolve, reject) => {
+    AliPushPlugin.init(
+    (result) => {
+    resolve(result);
+    },
+    (error) => {
+    reject(error);
+    }
+    );
+    });
+    console.log("初始化阿里云推送成功：", result_1);
+    } catch (error_1) {
+    console.log("初始化阿里云推送失败：", error_1);
+    }
+    }
+    // 获取设备 id;
+    async getDeviceId() {
+    try {
+    const result_1 = await new Promise((resolve, reject) => {
+    AliPushPlugin.getDeviceId(
+    (result) => {
+    resolve(result);
+    },
+    (error) => {
+    reject(error);
+    }
+    );
+    });
+    console.log("getPushDeviceId 成功：", result_1);
+    } catch (error_1) {
+    console.log("getPushDeviceId 失败：", error_1);
+    }
+    }
