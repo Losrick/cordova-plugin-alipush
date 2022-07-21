@@ -149,17 +149,17 @@ cordova plugin add https://github.com/Losrick/cordova-plugin-alipush.git --varia
 2、添加阿里云 maven 依赖
 
     在 platforms/android/目录下的 build.gradle 中添加仓库
-    
+
     buildscript {
     repositories {
     // 阿里云集体依赖仓库
-            maven{ url'https://maven.aliyun.com/nexus/content/repositories/releases/'}
-        }
+    maven{ url'https://maven.aliyun.com/nexus/content/repositories/releases/'}
+    }
     }
     allprojects {
-        repositories {
-            maven{ url'https://maven.aliyun.com/nexus/content/repositories/releases/'}
-        }
+    repositories {
+    maven{ url'https://maven.aliyun.com/nexus/content/repositories/releases/'}
+    }
     }
 
 **使用方法**
