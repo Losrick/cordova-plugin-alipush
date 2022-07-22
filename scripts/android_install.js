@@ -184,14 +184,14 @@ apply plugin: 'com.aliyun.ams.emas-services'`
         data = data.slice(0, repositoriesIndex) + HMSDK + data.slice(repositoriesIndex + 14);
         isChange = true;
       }
-      //添加魅族配置依赖(单独走魅族官方集成，不在阿里云中集成)
-      //   let mavenCentral = `
-      //     mavenCentral()`;
-      //   if (data.indexOf(mavenCentral, allprojectsIndex) == -1) {
-      //     let repositoriesIndex = data.indexOf(`repositories {`, allprojectsIndex);
-      //     data = data.slice(0, repositoriesIndex + 14) + mavenCentral + data.slice(repositoriesIndex + 14);
-      //     isChange = true;
-      //   }
+      //添加魅族配置依赖
+      let mavenCentral = `
+          mavenCentral()`;
+      if (data.indexOf(mavenCentral, allprojectsIndex) == -1) {
+        let repositoriesIndex = data.indexOf(`repositories {`, allprojectsIndex);
+        data = data.slice(0, repositoriesIndex + 14) + mavenCentral + data.slice(repositoriesIndex + 14);
+        isChange = true;
+      }
 
       if (isChange === true) {
         fs.writeFile(projectGradle, data, "utf8", function (err) {
