@@ -160,7 +160,32 @@ apply plugin: 'com.aliyun.ams.emas-services'`
       if (err) {
         throw new Error("Unable to find build.gradle: " + err);
       }
+
       let isChange = false; // 是否需要修改文件
+      let allprojectsIndex = data.indexOf(`allprojects {`); //allprojects字符串的位置，用于划分文件部分
+
+      //添加阿里云仓库地址
+      let aliMaven = `
+        // 添加阿里云仓库地址
+        maven{ url 'https://maven.aliyun.com/nexus/content/repositories/releases/'}`;
+      let firstPart = data.slice(0, allprojectsIndex); //文件截止至allprojects字符串的上半部分
+      let lastPart = data.slice(allprojectsIndex); //文件从allprojects字符串开始到结尾的下半部分
+
+      if (firstPart.indexOf(`https://maven.aliyun.com/nexus/content/repositories/releases/`) == -1) {
+        let firstRepositoriesIndex = firstPart.indexOf(`repositories {`);
+        firstPart =
+          firstPart.slice(0, firstRepositoriesIndex + 14) + aliMaven + firstPart.slice(firstRepositoriesIndex + 14);
+        data = firstPart + lastPart;
+        isChange = true;
+      }
+      if (lastPart.indexOf(`https://maven.aliyun.com/nexus/content/repositories/releases/`) == -1) {
+        let firstRepositoriesIndex = lastPart.indexOf(`repositories {`);
+        lastPart =
+          lastPart.slice(0, firstRepositoriesIndex + 14) + aliMaven + lastPart.slice(firstRepositoriesIndex + 14);
+        data = firstPart + lastPart;
+        isChange = true;
+      }
+
       // 添加emas-services插件
       let dependencies = `dependencies {`;
       if (data.indexOf("com.aliyun.ams:emas-services") == -1) {
@@ -173,12 +198,11 @@ apply plugin: 'com.aliyun.ams.emas-services'`
         isChange = true;
       }
 
-      let allprojectsIndex = data.indexOf(`allprojects {`);
       //添加HMS Core SDK的Maven仓地址
       let hms = `https://developer.huawei.com/repo/`;
       if (data.indexOf(hms, allprojectsIndex) == -1) {
         let repositoriesIndex = data.indexOf(`repositories {`, allprojectsIndex);
-        const HMSDK = ` repositories {
+        const HMSDK = `repositories {
         // 配置HMS Core SDK的Maven仓地址
         maven {url 'https://developer.huawei.com/repo/'}`;
         data = data.slice(0, repositoriesIndex) + HMSDK + data.slice(repositoriesIndex + 14);
@@ -186,8 +210,8 @@ apply plugin: 'com.aliyun.ams.emas-services'`
       }
       //添加魅族配置依赖
       let mavenCentral = `
-          mavenCentral()`;
-      if (data.indexOf(mavenCentral, allprojectsIndex) == -1) {
+        mavenCentral()`;
+      if (data.indexOf(`mavenCentral()`, allprojectsIndex) == -1) {
         let repositoriesIndex = data.indexOf(`repositories {`, allprojectsIndex);
         data = data.slice(0, repositoriesIndex + 14) + mavenCentral + data.slice(repositoriesIndex + 14);
         isChange = true;

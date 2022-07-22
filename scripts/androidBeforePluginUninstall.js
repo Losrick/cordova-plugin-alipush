@@ -63,6 +63,15 @@ module.exports = function (context) {
         throw new Error("Unable to find build.gradle:" + err);
       }
       let isChange = false; // 是否需要修改文件
+      //删除阿里云仓库
+      let isAliMaven = data.indexOf(`https://maven.aliyun.com/nexus/content/repositories/releases/`);
+      while (isAliMaven !== -1) {
+        var startIndex = data.indexOf(`// 添加阿里云仓库地址`);
+        var endIndex = data.indexOf(`https://maven.aliyun.com/nexus/content/repositories/releases/'`) + 63;
+        data = data.replace(data.substring(startIndex, endIndex), "");
+        isAliMaven = data.indexOf(`https://maven.aliyun.com/nexus/content/repositories/releases/`);
+        isChange = true;
+      }
       //删除emas-services插件
       if (data.indexOf(`classpath 'com.aliyun.ams:emas-services:1.0.1'`) !== -1) {
         var startIndex = data.indexOf(`// 添加emas-services插件`);
