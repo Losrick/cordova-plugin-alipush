@@ -130,10 +130,7 @@
         <source-file src="src/android/libs/alicloud-android-utdid-2.6.0.jar" target-dir="libs/" />
         <source-file src="src/android/libs/alicloud-android-utils-2.0.0.jar" target-dir="libs/" />
         <source-file src="src/android/libs/mipush-4.9.1.jar" target-dir="libs/" />
-        <!-- <source-file src="src/android/libs/mta-sdk-1.6.2.jar" target-dir="libs/" /> -->
-        <!-- <source-file src="src/android/libs/nativekeyboard.jar" target-dir="libs/" /> -->
         <source-file src="src/android/libs/networksdk-3.5.8.6-open.jar" target-dir="libs/" />
-        <!-- <source-file src="src/android/libs/open_sdk_r5793.jar" target-dir="libs/" /> -->
         <source-file src="src/android/libs/opush-3.0.0.aar" target-dir="libs/" />
         <!--手动集成魅族包-->
         <!-- <source-file src="src/android/libs/push-internal-4.1.4.aar" target-dir="libs/" /> -->
