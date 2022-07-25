@@ -18,18 +18,20 @@
     <preference name="MEIZUKEY" default="" />
     <preference name="MIID" default="" />
     <preference name="MIKEY" default="" />
+    <preference name="IOS_APP_KEY" default="" />
+    <preference name="IOS_APP_SECRET" default="" />
     <!-- <preference name="GCMSENDID" default=" " />
     <preference name="GCMAPPID" default=" " /> -->
     <preference name="APP_KEY" />
     <preference name="APP_SECRET" />
-    <dependency id="cordova-plugin-add-swift-support" />
     <platform name="ios">
+        <dependency id="cordova-plugin-add-swift-support" />
         <config-file parent="/*" target="config.xml">
             <feature name="AliPushPlugin">
                 <param name="ios-package" value="AliPushPlugin" />
             </feature>
-            <preference name="AliPush_APP_KEY" value="$APP_KEY" />
-            <preference name="AliPush_APP_SECRET" value="$APP_SECRET" />
+            <preference name="AliPush_APP_KEY" value="$IOS_APP_KEY" />
+            <preference name="AliPush_APP_SECRET" value="$IOS_APP_SECRET" />
         </config-file>
         <header-file src="src/ios/AliPush-Bridging-Header.h" />
         <source-file src="src/ios/AliPushPlugin.swift" />
