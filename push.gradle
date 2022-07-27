@@ -32,7 +32,6 @@ android {
 }
 dependencies {
     // compile ('com.google.firebase:firebase-messaging:9.6.1')
-
     implementation fileTree(dir: 'libs', include: '*.jar')
     // 阿里集成推送依赖开始，把所有的aar都添加上
     api(name:'alicloud-android-accs-4.6.3-emas', ext: 'aar')

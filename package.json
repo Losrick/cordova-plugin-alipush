@@ -1,8 +1,23 @@
 {
-  "name": "cordova-plugin-alipush",
-  "version": "1.0.0",
+  "name": "@gwyndolin/cordova-plugin-alipush",
+  "version": "1.0.1",
   "description": "this is ali push cordova plugin",
   "main": "AliPushPlugin.js",
-  "author": "",
-  "license": "Apache-2.0"
+  "author": "gwyndolin",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Losrick/cordova-plugin-alipush.git"
+  },
+  "keywords": [
+    "cordova",
+    "aliyun",
+    "push",
+    "android",
+    "ios"
+  ],
+  "bugs": {
+    "url": "https://github.com/Losrick/cordova-plugin-alipush/issues"
+  },
+  "homepage": "https://github.com/Losrick/cordova-plugin-alipush#readme"
 }

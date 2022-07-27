@@ -6,14 +6,12 @@
 //
 //  设备信息的分装类：sdk合作开发需要用这个类提供的设备信息接口
 
-//  Version:1.5.0-AU
+//  Version:utdid4all-1.1.0
 
 #ifndef UTDIDDevice_h
 #define UTDIDDevice_h
-#import <Foundation/Foundation.h>
-@protocol AidProtocolDelegate;
 
-NS_ASSUME_NONNULL_BEGIN
+#import "AidProtocol.h"
 
 @interface UTDevice : NSObject
 
@@ -46,11 +44,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @warning                     调用说明:若本地端没有最新AID，将建立异步请求获得AID，
  *
  *                              调用顺序:aidAsync任意时刻都可以调用.
+ *
  */
 +(void) aidAsync:(NSString *)appName
                  token:(NSString *)token
-           aidDelegate:(id<AidProtocolDelegate> )aidDelegate;
+           aidDelegate:(id<AidProtocolDelegate>)aidDelegate;
 
 @end
-NS_ASSUME_NONNULL_END
+
 #endif

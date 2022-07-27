@@ -1,8 +1,82 @@
+**参考源码**
+
+    https://github.com/log2c/cordova-plugin-log2c-aliyun-push 的IOS部分
+    https://github.com/youyfeng/cordova-plugin-alipush.git 的Android部分
+
 **安装**
 
-`APP_KEY和APP_SECRET必须存在`
-
 cordova plugin add https://github.com/Losrick/cordova-plugin-alipush.git --variable APP_KEY=APP_KEY --variable APP_SECRET=APP_SECRET --variable MIID=MIID --variable MIKEY=MIKEY --variable VIVOID=VIVOID --variable VIVOKEY=VIVOKEY --variable OPPOKEY=OPPOKEY --variable OPPOSECRET=OPPOSECRET --variable MEIZUID=MEIZUID --variable MEIZUKEY=MEIZUKEY --variable HUAWEIID=HUAWEIID --variable CHANNEL=1 --variable IOS_APP_KEY=IOS_APP_KEY --variable IOS_APP_SECRET=IOS_APP_SECRET
+
+**测试环境**
+
+    corodva:10.0.0;
+    ionic:6.19.1;
+    android:12;
+    ios:15.6;
+    node:14.17.0
+
+**阿里云在线通道为 1**
+
+    暂时不支持通过传参形式修改，可在AliPushPlugin.java源码中进行修改
+
+**VIVO 和 OPPO 由于没有设备，没有经过测试;没有谷歌厂商通道**
+
+**卸载插件**
+
+    插件通过匹配注释进行卸载，请不要随意变动插件安装后在 build.gradle 中的生成代码格式，
+
+**手动配置**
+
+    在 platforms/android/app 目录下添加 aliyun-emas-services.json 文件,不需要的服务都关闭避免干扰冲突!
+
+**使用方法**
+
+    declare let AliPushPlugin: any;
+
+    ngOnInit() {
+      // 初始化阿里云消息推送+获取 deviceId
+      this.platform.ready().then(() => {// 在app.component.ts中初始化需要在ready中执行
+        this.getDeviceId();
+        this.initPushService();
+      });
+    }
+
+    // 初始化阿里推送服务
+    async initPushService() {
+      try {
+        const result_1 = await new Promise((resolve, reject) => {
+          AliPushPlugin.init(
+            (result) => {
+              resolve(result);
+            },
+            (error) => {
+              reject(error);
+            }
+          );
+        });
+        console.log("初始化阿里云推送成功：", result_1);
+      } catch (error_1) {
+        console.log("初始化阿里云推送失败：", error_1);
+      }
+    }
+    //   获取设备id;
+    async getDeviceId() {
+      try {
+        const result_1 = await new Promise((resolve, reject) => {
+          AliPushPlugin.getDeviceId(
+            (result) => {
+              resolve(result);
+            },
+            (error) => {
+              reject(error);
+            }
+          );
+        });
+        console.log("getPushDeviceId成功：", result_1);
+      } catch (error_1) {
+        console.log("getPushDeviceId失败：", error_1);
+      }
+    }
 
 **辅助弹窗**
 
@@ -139,60 +213,3 @@ cordova plugin add https://github.com/Losrick/cordova-plugin-alipush.git --varia
 **解绑电话号**
 
     unbindPhoneNumber: function (success, error)
-
-**阿里云默认通道为 1 **
-
-**请不要修改插件生成在 build.gradle 中的代码注释，防止卸载失败**
-
-**手动配置**
-
-1、在 platforms/android/app 目录下添加 aliyun-emas-services.json 文件
-
-**使用方法**
-
-    declare let AliPushPlugin: any;
-
-    ngOnInit() {
-    // 初始化阿里云消息推送+获取 deviceId
-    this.platform.ready().then(() => {
-    this.getDeviceId();
-    this.initPushService();
-    });
-    }
-
-    // 初始化阿里推送服务
-    async initPushService() {
-    try {
-    const result_1 = await new Promise((resolve, reject) => {
-    AliPushPlugin.init(
-    (result) => {
-    resolve(result);
-    },
-    (error) => {
-    reject(error);
-    }
-    );
-    });
-    console.log("初始化阿里云推送成功：", result_1);
-    } catch (error_1) {
-    console.log("初始化阿里云推送失败：", error_1);
-    }
-    }
-    // 获取设备 id;
-    async getDeviceId() {
-    try {
-    const result_1 = await new Promise((resolve, reject) => {
-    AliPushPlugin.getDeviceId(
-    (result) => {
-    resolve(result);
-    },
-    (error) => {
-    reject(error);
-    }
-    );
-    });
-    console.log("getPushDeviceId 成功：", result_1);
-    } catch (error_1) {
-    console.log("getPushDeviceId 失败：", error_1);
-    }
-    }

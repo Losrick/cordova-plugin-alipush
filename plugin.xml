@@ -25,30 +25,49 @@
     <preference name="APP_KEY" />
     <preference name="APP_SECRET" />
     <platform name="ios">
-        <dependency id="cordova-plugin-add-swift-support" />
         <config-file parent="/*" target="config.xml">
             <feature name="AliPushPlugin">
                 <param name="ios-package" value="AliPushPlugin" />
             </feature>
-            <preference name="AliPush_APP_KEY" value="$IOS_APP_KEY" />
-            <preference name="AliPush_APP_SECRET" value="$IOS_APP_SECRET" />
         </config-file>
-        <header-file src="src/ios/AliPush-Bridging-Header.h" />
-        <source-file src="src/ios/AliPushPlugin.swift" />
-        <source-file src="src/ios/AppDelegate+AliPush.swift" />
+        <config-file parent="UIBackgroundModes" target="*-Info.plist">
+            <array>
+                <string>remote-notification</string>
+            </array>
+        </config-file>
+        <config-file parent="aps-environment" target="*-Debug.plist">
+            <string>development</string>
+        </config-file>
+        <config-file parent="aps-environment" target="*-Release.plist">
+            <string>production</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="aliyun push config">
+            <dict>
+                <key>appKey</key>
+                <string>$IOS_APP_KEY</string>
+                <key>appSecret</key>
+                <string>$IOS_APP_SECRET</string>
+                <key>aliyun_enable_debug</key>
+                <false />
+            </dict>
+        </config-file>
+        <header-file src="src/ios/AliPushPlugin.h" />
+        <source-file src="src/ios/AliPushPlugin.m" />
+        <header-file src="src/ios/AliyunNotificationLauncher.h" />
+        <source-file src="src/ios/AliyunNotificationLauncher.m" />
+        <header-file src="src/ios/AppDelegate+AliPushPlugin.h" />
+        <source-file src="src/ios/AppDelegate+AliPushPlugin.m" />
         <!-- 依赖 -->
-        <framework src="src/ios/libs/AlicloudSender.framework" custom="true" />
-        <framework src="src/ios/libs/AlicloudUtils.framework" custom="true" />
-        <framework src="src/ios/libs/CloudPushSDK.framework" custom="true" />
-        <framework src="src/ios/libs/EMASRest.framework" custom="true" />
-        <framework src="src/ios/libs/UTDID.framework" custom="true" />
-        <framework src="src/ios/libs/UTMini.framework" custom="true" />
-        <framework src="libz.tbd" framework="true" />
+        <framework src="libz.tbd" />
+        <framework src="UserNotifications.framework" />
+        <framework src="libsqlite3.tbd" />
         <framework src="libresolv.tbd" />
         <framework src="CoreTelephony.framework" />
         <framework src="SystemConfiguration.framework" />
-        <framework src="UserNotifications.framework" />
-        <framework src="libsqlite3.tbd" />
+        <framework src="src/ios/libs/AlicloudUtils.framework" custom="true" />
+        <framework src="src/ios/libs/CloudPushSDK.framework" custom="true" />
+        <framework src="src/ios/libs/UTDID.framework" custom="true" />
+        <framework src="src/ios/libs/UTMini.framework" custom="true" />
     </platform>
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
