@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-
+var path = require("path");
+var fs = require("fs");
 module.exports = function (context) {
-  var fs = context.requireCordovaModule("fs"),
-    path = context.requireCordovaModule("path");
+  // var fs = context.requireCordovaModule("fs"),
+  //   path = context.requireCordovaModule("path");
 
   var platformRoot = path.join(context.opts.projectRoot, "platforms/android");
 
