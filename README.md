@@ -5,7 +5,7 @@
 
 **安装**
 
-cordova plugin add https://github.com/Losrick/cordova-plugin-alipush.git --variable APP_KEY=APP_KEY --variable APP_SECRET=APP_SECRET --variable MIID=MIID --variable MIKEY=MIKEY --variable VIVOID=VIVOID --variable VIVOKEY=VIVOKEY --variable OPPOKEY=OPPOKEY --variable OPPOSECRET=OPPOSECRET --variable MEIZUID=MEIZUID --variable MEIZUKEY=MEIZUKEY --variable HUAWEIID=HUAWEIID --variable CHANNEL=1 --variable IOS_APP_KEY=IOS_APP_KEY --variable IOS_APP_SECRET=IOS_APP_SECRET
+cordova plugin add @gwyndolin/cordova-plugin-alipush --variable APP_KEY=APP_KEY --variable APP_SECRET=APP_SECRET --variable MIID=MIID --variable MIKEY=MIKEY --variable VIVOID=VIVOID --variable VIVOKEY=VIVOKEY --variable OPPOKEY=OPPOKEY --variable OPPOSECRET=OPPOSECRET --variable MEIZUID=MEIZUID --variable MEIZUKEY=MEIZUKEY --variable HUAWEIID=HUAWEIID --variable CHANNEL=1 --variable IOS_APP_KEY=IOS_APP_KEY --variable IOS_APP_SECRET=IOS_APP_SECRET
 
 **测试环境**
 
