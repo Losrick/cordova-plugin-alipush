@@ -1,27 +1,15 @@
-
 // Allow plugins to declare Maven dependencies via build-extras.gradle.
 buildscript {
     repositories {
         maven {
-            // url "https://maven.google.com"
-            //url 'http://maven.aliyun.com/nexus/content/groups/public/'
             url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
         }
-        maven{ url 'https://maven.aliyun.com/repository/google'}
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
                 // 配置HMS Core SDK的Maven仓地址。
         maven {
             url 'https://developer.huawei.com/repo/'
         }
         mavenCentral()
-    }
-    dependencies {
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-        classpath 'com.android.tools.build:gradle:4.2.2'
-        // 添加emas-services插件
-        classpath 'com.aliyun.ams:emas-services:1.0.1'
+        jcenter()
     }
 }
 allprojects {
@@ -31,19 +19,10 @@ allprojects {
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }
-        maven{ url 'https://maven.aliyun.com/repository/google'}
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
         // 配置HMS Core SDK的Maven仓地址。
         maven {
             url 'https://developer.huawei.com/repo/'
         }
-    }
-    //This replaces project.properties w.r.t. build settings
-    project.ext {
-      defaultBuildToolsVersion="27.0.1" //String
-      defaultMinSdkVersion=19 //Integer - Minimum requirement is Android 4.4
-      defaultTargetSdkVersion=27 //Integer - We ALWAYS target the latest by default
-      defaultCompileSdkVersion=27 //Integer - We ALWAYS compile with the latest by default
     }
 }
 android {
@@ -51,14 +30,7 @@ android {
         ndk { abiFilters 'armeabi', 'x86','arm64-v8a','armeabi-v7a','x86_64' }
     }
 }
-repositories {
-        flatDir {
-            dirs 'libs' //this way we can find the .aar file in libs folder
-        }
-    }
 dependencies {
-    // compile 'com.aliyun.ams:alicloud-android-push:3.1.2'
-    // compile 'com.aliyun.ams:alicloud-android-third-push:3.0.5@aar'
     // compile ('com.google.firebase:firebase-messaging:9.6.1')
 
     implementation fileTree(dir: 'libs', include: '*.jar')
