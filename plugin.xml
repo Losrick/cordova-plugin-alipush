@@ -5,9 +5,12 @@
         <engine name="cordova-ios" version=">=3.8"></engine>
         <engine name="cordova-android" version=">=7"></engine>
     </engines>
+    <!-- 插件名（target） -->
     <js-module name="AliPushPlugin" src="www/AliPushPlugin.js">
         <clobbers target="AliPushPlugin" />
     </js-module>
+
+    <!-- 插件接收的参数 -->
     <preference name="HUAWEIID" default="" />
     <preference name="VIVOID" default=" " />
     <preference name="VIVOKEY" default=" " />
@@ -84,12 +87,14 @@
             <preference name="GCMAPPID" value="$GCMAPPID" /> -->
         </config-file>
 
+        <!-- 指明钩子对应的执行文件 -->
         <hook type="after_plugin_add" src="scripts/androidAfterPrepare.js" />
         <hook type="after_plugin_install" src="scripts/android_install.js" />
         <hook type="after_prepare" src="scripts/androidAfterPrepare.js" />
         <hook type="before_plugin_uninstall" src="scripts/androidBeforePluginUninstall.js" />
         <hook type="before_plugin_rm" src="scripts/android_install.js" />
 
+        <!-- 在应用目录下的文件中添加标签 -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <meta-data android:name="CHANNEL" android:value="$CHANNEL" />
             <meta-data android:name="com.huawei.hms.client.appid" android:value="$HUAWEIID" />
@@ -129,6 +134,8 @@
                 </intent-filter>
             </service> -->
         </config-file>
+
+        <!-- 将文件复制到应用目录下 -->
         <framework src="push.gradle" custom="true" type="gradleReference" />
         <source-file src="src/android/libs/alicloud-android-accs-4.6.3-emas.aar" target-dir="libs/" />
         <source-file src="src/android/libs/alicloud-android-agoo-4.6.3-emas.aar" target-dir="libs/" />
