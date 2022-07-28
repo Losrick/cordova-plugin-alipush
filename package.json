@@ -1,6 +1,6 @@
 {
   "name": "@gwyndolin/cordova-plugin-alipush",
-  "version": "1.0.3",
+  "version": "1.0.1",
   "description": "this is ali push cordova plugin",
   "main": "AliPushPlugin.js",
   "author": "gwyndolin",
