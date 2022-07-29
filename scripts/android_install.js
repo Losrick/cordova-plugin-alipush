@@ -80,7 +80,7 @@ module.exports = function (context) {
       if (err) {
         throw new Error("Unable to find build.gradle:" + err);
       }
-      let isChange = false; //是否需要修改文件
+      let isChange = false; //是否需要修改文件，只有当isChange=true时，才会进行写入操作
       //添加阿里云推送的包依赖
       let dependencies = "// SUB-PROJECT DEPENDENCIES END";
       if (data.indexOf("// 阿里集成推送依赖开始，把所有的aar都添加上") == -1) {
@@ -142,7 +142,7 @@ apply plugin: 'com.aliyun.ams.emas-services'`
         );
         isChange = true;
       }
-
+      //写入操作，开始修改文件
       if (isChange === true) {
         fs.writeFile(appGradle, data, "utf8", function (err) {
           if (err) {
@@ -160,7 +160,7 @@ apply plugin: 'com.aliyun.ams.emas-services'`
         throw new Error("Unable to find build.gradle: " + err);
       }
 
-      let isChange = false; // 是否需要修改文件
+      let isChange = false; // 是否需要修改文件，只有当isChange=true时，才会进行写入操作
       let allprojectsIndex = data.indexOf(`allprojects {`); //allprojects字符串的位置，用于划分文件部分
 
       //添加阿里云仓库地址
@@ -215,7 +215,7 @@ apply plugin: 'com.aliyun.ams.emas-services'`
         data = data.slice(0, repositoriesIndex + 14) + mavenCentral + data.slice(repositoriesIndex + 14);
         isChange = true;
       }
-
+      //写入操作，开始修改文件
       if (isChange === true) {
         fs.writeFile(projectGradle, data, "utf8", function (err) {
           if (err) throw new Error("Unable to write into 项目级build.gradle: " + err);

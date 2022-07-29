@@ -33,7 +33,7 @@ module.exports = function (context) {
       if (err) {
         throw new Error("Unable to find build.gradle:" + err);
       }
-      let isChange = false; // 是否需要修改文件
+      let isChange = false; // 是否需要修改文件，只有当isChange=true时，才会进行写入操作
       //删除包依赖
       if (data.indexOf(`// 阿里集成推送依赖开始，把所有的aar都添加上`) !== -1) {
         var startIndex = data.indexOf(`// 阿里集成推送依赖开始，把所有的aar都添加上`);
@@ -46,6 +46,7 @@ module.exports = function (context) {
         data = data.replace(`apply plugin: 'com.aliyun.ams.emas-services'`, "");
         isChange = true;
       }
+      //写入操作，开始修改文件
       if (isChange === true) {
         fs.writeFile(appGradle, data, "utf8", function (err) {
           if (err) throw new Error("Unable to write into 应用级build.gradle: " + err);
@@ -61,7 +62,7 @@ module.exports = function (context) {
       if (err) {
         throw new Error("Unable to find build.gradle:" + err);
       }
-      let isChange = false; // 是否需要修改文件
+      let isChange = false; // 是否需要修改文件，只有当isChange=true时，才会进行写入操作
       //删除阿里云仓库
       let isAliMaven = data.indexOf(`https://maven.aliyun.com/nexus/content/repositories/releases/`);
       while (isAliMaven !== -1) {
@@ -85,6 +86,7 @@ module.exports = function (context) {
         data = data.replace(data.substring(startIndex, endIndex), "");
         isChange = true;
       }
+      //写入操作，开始修改文件
       if (isChange === true) {
         fs.writeFile(buildGradle, data, "utf8", function (err) {
           if (err) throw new Error("Unable to write into 应用级build.gradle: " + err);
